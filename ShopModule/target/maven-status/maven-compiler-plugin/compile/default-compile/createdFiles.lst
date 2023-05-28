@@ -1,0 +1,6 @@
+wipb\ee\jspdemo\web\Configuration.class
+wipb\ee\jspdemo\web\filter\CharacterEncodingFilter.class
+wipb\ee\jspdemo\web\filter\LoggingFilter.class
+wipb\ee\jspdemo\web\model\Book.class
+wipb\ee\jspdemo\web\controller\BookController.class
+wipb\ee\jspdemo\web\dao\BookDao.class
