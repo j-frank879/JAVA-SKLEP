@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:forward page="/book/list"></jsp:forward>
+        <jsp:forward page="/product/list"></jsp:forward>
     </body>
 </html>

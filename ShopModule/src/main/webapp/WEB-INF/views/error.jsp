@@ -1,10 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <title>Błąd</title>
+    <title>ERROR</title>
 </head>
 <body>
-<p>Błąd aplikacji</p>
+<p>Application error</p>
 <ul>
     <li>
         jakarta.servlet.error.status_code: ${requestScope['jakarta.servlet.error.status_code']}

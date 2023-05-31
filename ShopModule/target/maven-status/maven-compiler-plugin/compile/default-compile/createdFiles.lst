@@ -1,6 +1,10 @@
-wipb\ee\jspdemo\web\Configuration.class
+wipb\ee\jspdemo\web\model\Orders.class
 wipb\ee\jspdemo\web\filter\CharacterEncodingFilter.class
+wipb\ee\jspdemo\web\controller\ProductController.class
+wipb\ee\jspdemo\web\model\Customer.class
 wipb\ee\jspdemo\web\filter\LoggingFilter.class
-wipb\ee\jspdemo\web\model\Book.class
-wipb\ee\jspdemo\web\controller\BookController.class
-wipb\ee\jspdemo\web\dao\BookDao.class
+wipb\ee\jspdemo\web\model\Product.class
+wipb\ee\jspdemo\web\Configuration.class
+wipb\ee\jspdemo\web\util\DataAccessException.class
+wipb\ee\jspdemo\web\util\ConnectionFactory.class
+wipb\ee\jspdemo\web\dao\ProductDao.class

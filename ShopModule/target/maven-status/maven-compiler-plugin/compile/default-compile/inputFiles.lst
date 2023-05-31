@@ -1,6 +1,10 @@
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\model\Orders.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\util\ConnectionFactory.java
 C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\Configuration.java
 C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\filter\LoggingFilter.java
-C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\controller\BookController.java
-C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\dao\BookDao.java
-C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\model\Book.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\model\Customer.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\util\DataAccessException.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\model\Product.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\controller\ProductController.java
 C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\filter\CharacterEncodingFilter.java
+C:\Users\ehhh\Desktop\JAVA_SKLEP\ShopModule\src\main\java\wipb\ee\jspdemo\web\dao\ProductDao.java

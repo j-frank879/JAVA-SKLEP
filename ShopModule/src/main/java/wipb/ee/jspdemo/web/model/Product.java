@@ -8,26 +8,28 @@ package wipb.ee.jspdemo.web.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@NamedQuery(name = "Book.findAll", query = "select b from Book b")
-public class Book {
 
+@Entity
+@Table(name = "Product")
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
-    private String title;
-    private String author;
+    private String name;
     private BigDecimal price;
 
-    public Book() {
+    public Product() {
     }
 
-    public Book(String title, String author, BigDecimal price) {
-        this.title = title;
-        this.author = author;
+    public Product(String name, BigDecimal price) {
+        this.name = name;
         this.price = price;
     }
-
+    public Product(Long id, String name, BigDecimal price) {
+        this.name = name;
+        this.price = price;
+        this.id = id;   
+    }
     public Long getId() {
         return id;
     }
@@ -36,20 +38,12 @@ public class Book {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getName() {
+        return name;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public void setAuthor(String author) {
-        this.author = author;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public BigDecimal getPrice() {
