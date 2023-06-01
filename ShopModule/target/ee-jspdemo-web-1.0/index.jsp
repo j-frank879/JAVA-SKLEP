@@ -12,6 +12,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <jsp:forward page="/product/list"></jsp:forward>
+        <a href="<c:url value='/product/list'/>">Add a product</a>
     </body>
 </html>
