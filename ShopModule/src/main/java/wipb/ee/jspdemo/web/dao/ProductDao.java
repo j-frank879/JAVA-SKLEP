@@ -11,9 +11,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-/**
- * Dao w postaci komponentu EJB typu @Stateless
- */
 public class ProductDao {
     public void save(Product product) {
         final String SQL = "insert into \"PRODUCT\" values (DEFAULT, ?,?)";
@@ -88,6 +85,29 @@ public class ProductDao {
                 PreparedStatement statement = connection.prepareStatement(SQL);
                 ){
             statement.setLong(1,id);
+            try(ResultSet resultSet = statement.executeQuery()){
+                if(resultSet.next()){
+                    Product product = new Product();
+                    product.setId(resultSet.getLong("id"));
+                    product.setName(resultSet.getString("name"));
+                    product.setPrice(resultSet.getBigDecimal("price"));
+                    return Optional.of(product);
+                }
+            }catch (SQLException e){
+                throw new DataAccessException(e);
+            }
+        }catch (SQLException e){
+            throw new DataAccessException(e);
+        }
+        return Optional.empty();
+    }
+    public Optional<Product> find(String name) {
+        final  String SQL = "select * from \"PRODUCT\" where name = ?";
+        try(
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL);
+        ){
+            statement.setString(1, name);
             try(ResultSet resultSet = statement.executeQuery()){
                 if(resultSet.next()){
                     Product product = new Product();

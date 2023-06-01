@@ -3,7 +3,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
-<%-- fmt:setLocale konfiguruje ustawienia lokalne dla tej strony na polskie; używane przez fmt:formatNumber przy formatowaniu liczby--%>
+<%-- fmt:setLocale konfiguruje uostawienia lokalne dla tej strony na polskie; używane przez fmt:formatNumber przy formatowaniu liczby--%>
 <fmt:setLocale value="pl_PL"/>
 <!DOCTYPE html>
 <html>
@@ -18,25 +18,29 @@
     <thead>
     <tr>
         <th>Name</th>
-        <th>Price</th>
+        <th>Count</th>
+        <th>Total</th>
         <th>Actions</th>
     </tr>
     </thead>
     <tbody>
-    <c:forEach items='${productList}' var='product'>
+    <c:forEach items='${ordersList}' var='orders'>
         <tr>
-            <td>${fn:escapeXml(product.name)}</td>
+            <td>${fn:escapeXml(orders.productName)}</td>
             <td>
-                    <fmt:formatNumber value="${product.price}" type="number"/>
+                <fmt:formatNumber value="${orders.productCount}" type="number"/>
+            </td>
+            <td>
+                <fmt:formatNumber value="${orders.total}" type="number"/>
+            </td>
             <td>
                     <%-- c:url dodaje do url nazwę aplikacji (context root) oraz identifykator sesji jsessionid jeśli sesja jest włączona i brak obsługi ciasteczek --%>
-                <a href="<c:url value='/product/edit/${product.id}'/>">Edit</a>,
-                <a href="<c:url value='/product/remove/${product.id}'/>">Delete</a>
+                <a href="<c:url value='/orders/cancel/${orders.id}'/>">Cancel</a>
             </td>
         </tr>
     </c:forEach>
     </tbody>
 </table>
-<a href="<c:url value='/product/add'/>">Add a product</a>
+<a href="<c:url value='/orders/add'/>">Make an order</a>
 </body>
 </html>

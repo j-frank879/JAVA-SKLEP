@@ -10,7 +10,10 @@ CREATE TABLE IF NOT EXISTS Orders
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     customerId integer NOT NULL,
     productName varchar(50) NOT NULL,
-    productCount integer NOT NULL
+    productCount integer NOT NULL,
+    total integer NOT NULL,
+    paid bit NOT NULL,
+    cancelled bit NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Customer

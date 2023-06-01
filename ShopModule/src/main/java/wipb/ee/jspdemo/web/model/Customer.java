@@ -3,10 +3,7 @@ package wipb.ee.jspdemo.web.model;
 import jakarta.persistence.*;
 import java.math.BigDecimal;
 
-@Entity
-@NamedQuery(name = "Customer.findAll", query = "select b from Customer b")
 public class Customer {
-
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private Long id;
