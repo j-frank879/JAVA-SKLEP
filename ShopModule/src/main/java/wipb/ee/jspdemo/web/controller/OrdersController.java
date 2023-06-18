@@ -27,7 +27,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
 
-@WebServlet(name = "OrdersController", urlPatterns = {"/orders/list", "/orders/cancel", "/orders/add", "/orders/pay"})
+@WebServlet(name = "OrdersController", urlPatterns = {"/orders/list", "/orders/cancel/*", "/orders/add", "/orders/pay/*"})
 public class OrdersController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(OrdersController.class.getName());
@@ -90,7 +90,7 @@ public class OrdersController extends HttpServlet {
     }
     private void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
-        Long id = parseLong(s);
+        Long id = null;
 
         Map<String, String> fieldToError = new HashMap<>();
         Orders b = parseOrders(request.getParameterMap(), fieldToError);
@@ -109,7 +109,7 @@ public class OrdersController extends HttpServlet {
     }
     private void handleOrdersPayPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
-        Long id = parseLong(s);
+        Long id = parseId(s);
 
         Map<String,String> fieldToError = new HashMap<>();
         Orders b = parseOrders(request.getParameterMap(),fieldToError);
@@ -128,20 +128,25 @@ public class OrdersController extends HttpServlet {
     }
     private void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String s = request.getPathInfo();
-        Long id = parseLong(s);
+        Long id = parseId(s);
         dao.cancel(id);
         response.sendRedirect(request.getContextPath() + "/orders/list");
     }
 
     private Orders parseOrders(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
-        String customerId = paramToValue.get("customerId")[0];
+        String customerId = "1";
+        try {
+           customerId =  paramToValue.get("customerId")[0];
+        } catch (Exception _){
+
+        }
         String productName = paramToValue.get("productName")[0];
         String productCount = paramToValue.get("productCount")[0];
 
         Long customerIdLong = null;
         int productCountInt = 0;
-        boolean isPaidBool = true;
-        boolean isCancelledBool = true;
+        boolean isPaidBool = false;
+        boolean isCancelledBool = false;
 
         ProductDao productDao = new ProductDao();
         BigDecimal price = productDao.find(productName).get().getPrice();
@@ -151,8 +156,8 @@ public class OrdersController extends HttpServlet {
         }
 
         try {
-            customerIdLong = parseLong(customerId);
-            productCountInt = parseInt(productCount);
+            customerIdLong = Long.parseLong(customerId);
+            productCountInt = Integer.parseInt(productCount);
         } catch (Throwable e) {
             fieldToError.put("price", "Cena musi być poprawną liczbą");
         }
@@ -177,15 +182,9 @@ public class OrdersController extends HttpServlet {
         DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         return format.format(price);
     }
-    private Long parseLong(String s) {
+    private Long parseId(String s) {
         if (s == null || !s.startsWith("/"))
             return null;
         return Long.parseLong(s.substring(1));
-    }
-    private int parseInt(String s) throws ParseException {
-        if (s == null || !s.startsWith("/")) {
-            throw new ParseException(String.format("Error parsing string", s), 0);
-        }
-        return Integer.parseInt(s.substring(1));
     }
 }
