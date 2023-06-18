@@ -22,8 +22,8 @@ public class OrdersDao {
                         PreparedStatement statement = connection.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
                 ) {
             statement.setLong(1, orders.getCustomerId());
-            statement.setLong(2, orders.getProductCount());
-            statement.setString(3, orders.getProductName());
+            statement.setString(2, orders.getProductName());
+            statement.setLong(3, orders.getProductCount());
             statement.setBigDecimal(4, orders.getTotal());
             statement.setBoolean(5, orders.isPaid());
             statement.setBoolean(6, orders.isCancelled());
@@ -54,7 +54,7 @@ public class OrdersDao {
         }
     }
     public void pay(Long id) {
-        final String SQL = "update \"ORDERS\" set ispaid = true where id = ?";
+        final String SQL = "update \"ORDERS\" set isPaid = true where id = ?";
         try(
                 Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL);
