@@ -6,7 +6,6 @@
 package wipb.ee.jspdemo.web.controller;
 
 
-
 import wipb.ee.jspdemo.web.dao.ProductDao;
 import wipb.ee.jspdemo.web.model.Product;
 
@@ -38,7 +37,7 @@ public class ProductController extends HttpServlet {
     /**
      * Handles the HTTP <code>GET</code> method.
      *
-     * @param request servlet request
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
@@ -84,7 +83,7 @@ public class ProductController extends HttpServlet {
     private void handleProductList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> products = dao.findAll();
         request.setAttribute("productList", products);
-        request.getRequestDispatcher("/WEB-INF/views/product/product_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/product_list.jsp").forward(request, response);
     }
 
     private void handleGetEditGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -96,13 +95,13 @@ public class ProductController extends HttpServlet {
             request.setAttribute("name",b.getName());
             request.setAttribute("price",formatPrice(b.getPrice()));
         }
-        request.getRequestDispatcher("/WEB-INF/views/product/product_form.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request, response);
     }
 
     private void handleProductAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("name","");
         request.setAttribute("price","");
-        request.getRequestDispatcher("/WEB-INF/views/product/product_form.jsp").forward(request,response);
+        request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request,response);
     }
 
     private void handleProductEditPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -117,7 +116,7 @@ public class ProductController extends HttpServlet {
             request.setAttribute("name",request.getParameter("name"));
             request.setAttribute("price",request.getParameter("price"));
 
-            request.getRequestDispatcher("/WEB-INF/views/product/product_form.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request, response);
             return;
         }
 
@@ -138,7 +137,7 @@ public class ProductController extends HttpServlet {
             request.setAttribute("name", request.getParameter("name"));
             request.setAttribute("price", request.getParameter("price"));
 
-            request.getRequestDispatcher("/WEB-INF/views/product/product_form.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request,response);
             return;
         }
         b.setId(id);

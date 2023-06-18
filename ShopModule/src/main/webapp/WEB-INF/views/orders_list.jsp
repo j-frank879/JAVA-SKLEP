@@ -11,13 +11,13 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
           integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Products</title>
+    <title>Orders</title>
 </head>
 <body>
 <table>
     <thead>
     <tr>
-        <th>Name</th>
+        <th>Product name</th>
         <th>Count</th>
         <th>Total</th>
         <th>Actions</th>
@@ -33,9 +33,13 @@
             <td>
                 <fmt:formatNumber value="${orders.total}" type="number"/>
             </td>
+
             <td>
                     <%-- c:url dodaje do url nazwę aplikacji (context root) oraz identifykator sesji jsessionid jeśli sesja jest włączona i brak obsługi ciasteczek --%>
-                <a href="<c:url value='/orders/cancel/${orders.id}'/>">Cancel</a>
+                <c:if test="${orders.cancelled==false}">
+                    <a href="<c:url value='/orders/cancel/${orders.id}'/>">Cancel</a>
+                </c:if>
+
             </td>
         </tr>
     </c:forEach>

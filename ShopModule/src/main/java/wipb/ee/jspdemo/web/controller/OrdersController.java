@@ -45,6 +45,9 @@ public class OrdersController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
         switch (path) {
+            case "/orders/list":
+                handleOrdersList(request, response);
+                break;
             case "/orders/listCancelled":
                 //handleOrdersList(request, response);
                 break;
@@ -53,9 +56,6 @@ public class OrdersController extends HttpServlet {
                 break;
             case "/orders/add":
                 handleOrdersAdd(request, response);
-                break;
-            case "/orders/list":
-                handleOrdersList(request, response);
                 break;
             case "/orders/pay":
                 handleOrdersPayPost(request, response);
@@ -72,14 +72,8 @@ public class OrdersController extends HttpServlet {
 
     private void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Orders> orders = dao.findAll();
-
-        /* if admin/manager then
-        Long customerId = request.costam();
-        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId);
-        */
-
         request.setAttribute("ordersList", orders);
-        request.getRequestDispatcher("/WEB-INF/views/orders/orders_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     /*
     private void handleOrdersListNotCancelled(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -87,13 +81,12 @@ public class OrdersController extends HttpServlet {
         Long customerId = request.costam();
         orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId);
         request.setAttribute("ordersList", orders);
-        request.getRequestDispatcher("/WEB-INF/views/orders/orders_list.jsp").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     */
     private void handleOrdersAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("name", "");
-        request.setAttribute("price", "");
-        request.getRequestDispatcher("/WEB-INF/views/orders/orders_form.jsp").forward(request, response);
+        request.setAttribute("id", "");
+        request.getRequestDispatcher("/WEB-INF/views/orders_form.jsp").forward(request, response);
     }
     private void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
@@ -107,7 +100,7 @@ public class OrdersController extends HttpServlet {
             request.setAttribute("name", request.getParameter("name"));
             request.setAttribute("price", request.getParameter("price"));
 
-            request.getRequestDispatcher("/WEB-INF/views/orders/orders_form.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/views/orders_form.jsp").forward(request, response);
             return;
         }
         b.setId(id);
