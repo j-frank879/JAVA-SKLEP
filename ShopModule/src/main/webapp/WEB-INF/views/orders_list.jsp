@@ -35,11 +35,12 @@
             </td>
 
             <td>
-                    <%-- c:url dodaje do url nazwę aplikacji (context root) oraz identifykator sesji jsessionid jeśli sesja jest włączona i brak obsługi ciasteczek --%>
                 <c:if test="${orders.cancelled==false}">
                     <a href="<c:url value='/orders/cancel/${orders.id}'/>">Cancel</a>
                 </c:if>
-
+                <c:if test="${orders.paid==false}">
+                    <a href="<c:url value='/orders/pay/${orders.id}'/>">Pay</a>
+                </c:if>
             </td>
         </tr>
     </c:forEach>
