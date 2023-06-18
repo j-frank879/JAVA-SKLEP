@@ -12,8 +12,8 @@ CREATE TABLE IF NOT EXISTS Orders
     productName varchar(50) NOT NULL,
     productCount integer NOT NULL,
     total integer NOT NULL,
-    paid bit NOT NULL,
-    cancelled bit NOT NULL
+    isPaid bit NOT NULL,
+    isCancelled bit NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS Customer
