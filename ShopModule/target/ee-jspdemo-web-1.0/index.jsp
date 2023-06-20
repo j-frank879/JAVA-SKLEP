@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -10,7 +11,6 @@
         <title>JSP Page</title>
     </head>
     <body>
-        <a href="<c:url value='/product/list'/>">Products</a>
-        <a href="<c:url value='/orders/list'/>">Orders</a>
+<jsp:include page="WEB-INF/views/navbar.jsp"/>
     </body>
 </html>
