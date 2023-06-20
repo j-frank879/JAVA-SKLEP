@@ -3,7 +3,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page session="true" %>
-<jsp:useBean id="user" class="wipb.ee.jspdemo.web.bean.UserBean"/>
+<jsp:useBean id="user" scope="session" class="wipb.ee.jspdemo.web.bean.UserBean"/>
 
 <c:choose>
     <c:when test="${user.role=='customer'}">

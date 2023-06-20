@@ -14,6 +14,7 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 import java.util.logging.Logger;
 
 //MyBean myBean = (MyBean) request.getSession().getAttribute("myBean");
@@ -50,9 +51,43 @@ public class UserController extends HttpServlet {
         }
 
     }
-    private void handleLogin(HttpServletRequest request, HttpServletResponse response) {
+    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("login","");
+        request.setAttribute("password","");
+        request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
     }
-    private void handleLoginPost(HttpServletRequest request, HttpServletResponse response) {
+    private void handleLoginPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        String s = request.getPathInfo();
+        Long id = parseId(s);
+        String role="customer";
+        Map<String,String> fieldToError = new HashMap<>();
+        User b = parseLoginPassword(request.getParameterMap(), fieldToError);
+
+        if(!fieldToError.isEmpty()){
+            request.setAttribute("errors", fieldToError);
+            request.setAttribute("login", request.getParameter("login"));
+            request.setAttribute("password", request.getParameter("password"));
+
+
+            request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
+            return;
+        }
+        Optional<User> a=dao.findByLoginPassword(b.getLogin(),b.getPassword());
+if(a.isPresent())
+{
+    UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+    myBean.setId(a.get().getId());
+    myBean.setLogin(a.get().getLogin());
+    myBean.setPassword(a.get().getPassword());
+    myBean.setRole(a.get().getRole());
+    myBean.setName(a.get().getName());
+    myBean.setEmail(a.get().getEmail());
+    myBean.setBalance(a.get().getBalance());
+
+}
+  else
+  {}
 
     }
 
@@ -85,7 +120,7 @@ String role="customer";
        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
        myBean.clear();
        //request.getSession().invalidate();
-        //response.sendRedirect(request.getContextPath() + "/product/list");
+        response.sendRedirect(request.getContextPath() + "/product/list");
     }
 
     private void handleRegistry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -117,6 +152,17 @@ String role="customer";
         }
 
         return fieldToError.isEmpty() ?  new User(login,password,name,email) : null;
+    }
+    private User parseLoginPassword(Map<String,String[]> paramToValue, Map<String,String> fieldToError)
+    {String login = paramToValue.get("login")[0];
+        String password = paramToValue.get("password")[0];
+        if (login == null || login.trim().isEmpty()) {
+            fieldToError.put("name","Pole login nie może być puste");
+        }
+        if (password == null || password.trim().isEmpty()) {
+            fieldToError.put("name","Pole password nie może być puste");
+        }
+        return fieldToError.isEmpty() ?  new User(login,password) : null;
     }
     private Long parseId(String s) {
         if (s == null || !s.startsWith("/"))
