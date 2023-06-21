@@ -5,10 +5,11 @@
 
 <%-- fmt:setLocale konfiguruje uostawienia lokalne dla tej strony na polskie; używane przez fmt:formatNumber przy formatowaniu liczby--%>
 <fmt:setLocale value="pl_PL"/>
-<c:set var="content">
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <title>Orders</title>
 </head>
@@ -49,7 +50,3 @@
 <a href="<c:url value='/orders/add'/>">Make an order</a>
 </body>
 </html>
-</c:set>
-
-<%@ include file="layout.jsp" %>
-
