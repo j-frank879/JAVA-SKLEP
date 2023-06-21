@@ -65,7 +65,7 @@
                 <tr>
                     <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
                     <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
-                    <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
+                    <td>  <a href="<c:url value='/registry'/>">Register</a></td>
                     <td>  <a href="<c:url value='/login'/>">Login</a></td>
 
                 </tr>
@@ -99,7 +99,7 @@
                 <tr>
                     <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
                     <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
-                    <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
+                    <td>  <a href="<c:url value='/registry'/>">Register</a></td>
                     <td>  <a href="<c:url value='/login'/>">Login</a></td>
 
                 </tr>
