@@ -14,6 +14,7 @@
     <title>Orders</title>
 </head>
 <body>
+<jsp:include page="navbar.jsp"/>
 <table>
     <thead>
     <tr>

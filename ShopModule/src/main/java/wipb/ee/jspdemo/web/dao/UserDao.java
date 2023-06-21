@@ -15,7 +15,7 @@ import java.util.Optional;
 
 public class UserDao {
     public void save(User user) {
-        final String SQL = "insert into \"USER\" values (DEFAULT, ?,?,'customer',?,?,?)";
+        final String SQL = "insert into \"USERS\" values (DEFAULT, ?,?,'customer',?,?,?)";
 
         try
                 (
@@ -42,7 +42,7 @@ public class UserDao {
     }
 
     public void updatePassword(User user) {
-        final String SQL = "update \"USER\" set password = ? where id = ?";
+        final String SQL = "update \"USERS\" set password = ? where id = ?";
         try (
                 Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL, PreparedStatement.RETURN_GENERATED_KEYS);
@@ -57,7 +57,7 @@ public class UserDao {
     }
 
     public void delete(Long id) {
-        final String SQL = "delete \"PRODUCT\" where id = ?";
+        final String SQL = "delete \"USERS\" where id = ?";
         try(
                 Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL);
@@ -71,7 +71,7 @@ public class UserDao {
     }
 
     public Optional<User> findByLoginPassword(String login,String password) {
-        final  String SQL = "select * from \"USER\" where login = ? and password=?";
+        final  String SQL = "select * from \"USERS\" where login = ? and password=?";
         try(
                 Connection connection = ConnectionFactory.getConnection();
                 PreparedStatement statement = connection.prepareStatement(SQL);
@@ -101,7 +101,7 @@ public class UserDao {
 
 
     public List<User> findAll() {
-        final String SQL = "select * from \"USER\"";
+        final String SQL = "select * from \"USERS\"";
         List<User> result = new ArrayList<>();
         try(
                 Connection connection = ConnectionFactory.getConnection();

@@ -9,7 +9,7 @@
 </head>
 <body>
 <jsp:include page="navbar.jsp"/>
-<h3>Registration</h3>
+<h3>Login</h3>
 <form method="post">
     <table>
         <tr>

@@ -75,16 +75,19 @@ public class UserController extends HttpServlet {
         }
         Optional<User> a=dao.findByLoginPassword(b.getLogin(),b.getPassword());
 if(a.isPresent())
-{
-    UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+{UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+    if(myBean==null)
+    {myBean=new UserBean();
+        request.getSession().setAttribute("user",myBean);
+    }
+
     myBean.setId(a.get().getId());
     myBean.setLogin(a.get().getLogin());
-    myBean.setPassword(a.get().getPassword());
     myBean.setRole(a.get().getRole());
     myBean.setName(a.get().getName());
     myBean.setEmail(a.get().getEmail());
     myBean.setBalance(a.get().getBalance());
-
+    response.sendRedirect(request.getContextPath() + "/product/list");
 }
   else
   {}

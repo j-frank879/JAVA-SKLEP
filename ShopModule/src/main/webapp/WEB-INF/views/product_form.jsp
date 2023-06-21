@@ -8,6 +8,7 @@
         <style>.error { color: red; }</style>
     </head>
     <body>
+    <jsp:include page="navbar.jsp"/>
         <h3>Product</h3>
         <form method="post">
             <table>
