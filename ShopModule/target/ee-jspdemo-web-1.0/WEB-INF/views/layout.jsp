@@ -55,6 +55,13 @@
 <body>
 <header>
     <p> Sklep </p>
+    <tr>
+        <c:if test="${loginMessage!=null}">
+            <c:out value="${loginMessage}"></c:out>
+            <c:set var="loginMessage" value="${null}"></c:set>
+        </c:if>
+        </td>
+    </tr>
 </header>
 
 <nav>
@@ -63,32 +70,32 @@
         <c:when test="${user==null}">
             <table>
                 <tr>
-                    <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
-                    <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
-                    <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
-                    <td>  <a href="<c:url value='/login'/>">Login</a></td>
+                    <td><a href="<c:url value='/product/list'/>">Products</a></td>
+                    <td><a href="<c:url value='/orders/list'/>">Cart</a></td>
+                    <td><a href="<c:url value='/registry'/>">Register</a></td>
+                    <td><a href="<c:url value='/login'/>">Login</a></td>
 
                 </tr>
 
             </table>
         </c:when>
-        <c:when test="${user.role=='customer'}">
+        <c:when test="${user.role.equals('customer')}">
             <table>
                 <tr>
-                    <td>  <a href="<c:url value='/product/list'/>">Products</a><br/></td>
-                    <td>  <a href="<c:url value='/orders/list'/>">My Orders</a><br/></td>
-                    <td>  <a href="<c:url value='/orders/list'/>">Cart</a><br/></td>
-                    <td>  <a href="<c:url value='/logout'/>">Logout</a><br/></td>
+                    <td><a href="<c:url value='/product/list'/>">Products</a><br/></td>
+                    <td><a href="<c:url value='/orders/list'/>">My Orders</a><br/></td>
+                    <td><a href="<c:url value='/orders/list'/>">Cart</a><br/></td>
+                    <td><a href="<c:url value='/logout'/>">Logout</a><br/></td>
 
                 </tr>
             </table>
         </c:when>
-        <c:when test="${user.role=='worker'}">
+        <c:when test="${user.role.equals('worker')}">
             <table>
                 <tr>
-                    <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
-                    <td>  <a href="<c:url value='/orders/list'/>"> Orders</a></td>
-                    <td>  <a href="<c:url value='/logout'/>">Logout</a></td>
+                    <td><a href="<c:url value='/product/list'/>">Products</a></td>
+                    <td><a href="<c:url value='/orders/list'/>"> Orders</a></td>
+                    <td><a href="<c:url value='/logout'/>">Logout</a></td>
 
                 </tr>
 
@@ -97,10 +104,10 @@
         <c:otherwise>
             <table>
                 <tr>
-                    <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
-                    <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
-                    <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
-                    <td>  <a href="<c:url value='/login'/>">Login</a></td>
+                    <td><a href="<c:url value='/product/list'/>">Products</a></td>
+                    <td><a href="<c:url value='/orders/list'/>">Cart</a></td>
+                    <td><a href="<c:url value='/registry'/>">Register</a></td>
+                    <td><a href="<c:url value='/login'/>">Login</a></td>
 
                 </tr>
 
