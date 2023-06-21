@@ -11,7 +11,6 @@
         <title>Sklep JAVA</title>
     </head>
     <body>
-<jsp:include page="WEB-INF/views/navbar.jsp"/>
     </body>
 </html>
 </c:set>

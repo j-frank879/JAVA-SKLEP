@@ -1,5 +1,6 @@
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<c:set var="content">
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +9,6 @@
     <style>.error { color: red; }</style>
 </head>
 <body>
-<jsp:include page="navbar.jsp"/>
 <h3>Registration</h3>
 <form method="post">
     <table>
@@ -38,3 +38,6 @@
 </form>
 </body>
 </html>
+</c:set>
+
+<%@ include file="layout.jsp" %>
