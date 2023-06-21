@@ -1,7 +1,10 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
-<!DOCTYPE html>
-<html>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="content">
+    <!DOCTYPE html>
+    <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Order</title>
@@ -26,5 +29,8 @@
             <input type="submit" value="Save"> 
         </form>
     </body>
-</html>
+    </html>
+</c:set>
+
+<%@ include file="layout.jsp" %>
 
