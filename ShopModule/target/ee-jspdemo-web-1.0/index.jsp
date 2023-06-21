@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<c:set var="content">
 <!DOCTYPE html>
 <html>
     <head>
@@ -14,3 +15,6 @@
         <a href="<c:url value='/orders/list'/>">Orders</a>
     </body>
 </html>
+</c:set>
+
+<%@ include file="WEB-INF/views/layout.jsp" %>

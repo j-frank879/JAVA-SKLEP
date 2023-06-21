@@ -1,5 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="content">
 <!DOCTYPE html>
 <html>
     <head>
@@ -26,4 +28,7 @@
         </form>
     </body>
 </html>
+</c:set>
+
+<%@ include file="layout.jsp" %>
 
