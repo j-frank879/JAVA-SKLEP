@@ -61,7 +61,7 @@ public class UserDaoTest {
 
         Optional<User> updatedUser = userDao.findByLoginPassword(user.getLogin(), newPassword);
         assertTrue(updatedUser.isPresent());
-        assertEquals(user.getPassword(), updatedUser.get().getName());
+        assertEquals(user.getPassword(), updatedUser.get().getPassword());
     }
 
     @Test
