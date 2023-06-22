@@ -54,8 +54,12 @@
 </head>
 <body>
 <header>
-    <p> Sklep </p>
+    <p>
+        Sklep </p>
 </header>
+<c:if test="${user!=null}">
+    <c:out value="Welcome back, ${sessionScope.user.getName()}"></c:out>
+</c:if>
 
 <nav>
     <c:set var="user" value="${sessionScope.user}"/>
