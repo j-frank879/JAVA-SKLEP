@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 public class OrdersController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(OrdersController.class.getName());
-    private OrdersDao dao = new OrdersDao();
+    OrdersDao dao = new OrdersDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -56,7 +56,7 @@ public class OrdersController extends HttpServlet {
         }
     }
 
-    private void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Orders> orders = dao.findAll();
         request.setAttribute("ordersList", orders);
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
@@ -71,11 +71,11 @@ public class OrdersController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     */
-    private void handleOrdersAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handleOrdersAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("id", "");
         request.getRequestDispatcher("/WEB-INF/views/orders_form.jsp").forward(request, response);
     }
-    private void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = null;
 
@@ -94,7 +94,7 @@ public class OrdersController extends HttpServlet {
         dao.save(b);
         response.sendRedirect(request.getContextPath() + "/orders/list");
     }
-    private void handleOrdersPayPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handleOrdersPayPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
 
@@ -113,14 +113,14 @@ public class OrdersController extends HttpServlet {
         dao.pay(id);
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
-    private void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
         dao.cancel(id);
         response.sendRedirect(request.getContextPath() + "/orders/list");
     }
 
-    private Orders parseOrders(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
+    Orders parseOrders(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
         String customerId = "1";
         try {
            customerId =  paramToValue.get("customerId")[0];
@@ -154,7 +154,7 @@ public class OrdersController extends HttpServlet {
     }
 
 
-    private BigDecimal parsePrice(String s) throws ParseException {
+    BigDecimal parsePrice(String s) throws ParseException {
         if (s == null || s.trim().isEmpty()) {
             return null;
         }
@@ -163,13 +163,13 @@ public class OrdersController extends HttpServlet {
         format.setParseBigDecimal(true);
         return ((BigDecimal) format.parse(s)).setScale(2, RoundingMode.FLOOR);
     }
-    private String formatPrice(BigDecimal price) {
+    String formatPrice(BigDecimal price) {
         if (price == null) return "";
         Locale locale = new Locale("pl", "PL");
         DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         return format.format(price);
     }
-    private Long parseId(String s) {
+    Long parseId(String s) {
         if (s == null || !s.startsWith("/"))
             return null;
         return Long.parseLong(s.substring(1));

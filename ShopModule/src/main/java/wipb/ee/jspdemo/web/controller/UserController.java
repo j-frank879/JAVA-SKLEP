@@ -56,7 +56,7 @@ public class UserController extends HttpServlet {
         request.setAttribute("password","");
         request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
     }
-    private void handleLoginPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    void handleLoginPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         String s = request.getPathInfo();
         Long id = parseId(s);
@@ -125,7 +125,7 @@ if(a.isPresent())
         response.sendRedirect(request.getContextPath() + "/login");
     }
 
-    private void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
        myBean.clear();
        //request.getSession().invalidate();
