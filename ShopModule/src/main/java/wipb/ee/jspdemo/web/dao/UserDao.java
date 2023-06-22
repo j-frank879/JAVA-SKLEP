@@ -84,9 +84,9 @@ public class UserDao {
                     User user = new User();
                     user.setId(resultSet.getLong("id"));
                     user.setLogin(resultSet.getString("login"));
-                    user.setName(resultSet.getString("password"));
-                    user.setRole(resultSet.getString("role"));
                     user.setName(resultSet.getString("name"));
+                    user.setRole(resultSet.getString("role"));
+                    user.setPassword(resultSet.getString("password"));
                     user.setEmail(resultSet.getString("email"));
                     user.setBalance(resultSet.getBigDecimal("balance"));
                     return Optional.of(user);
