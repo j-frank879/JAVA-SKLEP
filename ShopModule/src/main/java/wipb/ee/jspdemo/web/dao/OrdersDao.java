@@ -97,7 +97,7 @@ public class OrdersDao {
         return Optional.empty();
     }
     public List<Orders> findAll() {
-        final String SQL = "select * from \"ORDERS\"";
+        final String SQL = "select * from \"ORDERS\" ";
         List<Orders> result = new ArrayList<>();
         try(
                 Connection connection = ConnectionFactory.getConnection();
@@ -121,7 +121,7 @@ public class OrdersDao {
         return result;
     }
     public List<Orders> findAllNotCancelled() {
-        final String SQL = "select * from \"ORDERS\" where isCancelled = 0";
+        final String SQL = "select * from \"ORDERS\" where isCancelled = false";
         List<Orders> result = new ArrayList<>();
         try(
                 Connection connection = ConnectionFactory.getConnection();
@@ -169,5 +169,17 @@ public class OrdersDao {
             throw new DataAccessException(e);
         }
         return result;
+    }
+
+    public void truncate() {
+        final String SQL = "truncate table \"ORDERS\"";
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL);
+        ) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
+        }
     }
 }

@@ -146,8 +146,16 @@ public class ProductDao {
         }
         return result;
     }
-    public void truncate(){
-
+    public void truncate() {
+        final String SQL = "truncate table \"PRODUCT\"";
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL);
+        ) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
+        }
     }
 
 }

@@ -104,7 +104,7 @@ if(a.isPresent())
     private void handleRegistryPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String s = request.getPathInfo();
         Long id = parseId(s);
-String role="customer";
+        String role="customer";
         Map<String,String> fieldToError = new HashMap<>();
         User b = parseUser(request.getParameterMap(), fieldToError);
 
@@ -114,7 +114,6 @@ String role="customer";
             request.setAttribute("email", request.getParameter("email"));
             request.setAttribute("login", request.getParameter("login"));
             request.setAttribute("password", request.getParameter("password"));
-
 
             request.getRequestDispatcher("/WEB-INF/views/registry_form.jsp").forward(request,response);
             return;

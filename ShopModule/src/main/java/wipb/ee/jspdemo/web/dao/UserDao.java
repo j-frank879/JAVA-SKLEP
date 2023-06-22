@@ -122,4 +122,16 @@ public class UserDao {
         }
         return result;
     }
+
+    public void truncate() {
+        final String SQL = "truncate table \"USERS\"";
+        try (
+                Connection connection = ConnectionFactory.getConnection();
+                PreparedStatement statement = connection.prepareStatement(SQL);
+        ) {
+            statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DataAccessException(e);
+        }
+    }
 }
