@@ -1,5 +1,6 @@
 package wipb.ee.jspdemo.web.dao;
 
+import jakarta.ejb.Stateless;
 import wipb.ee.jspdemo.web.model.Product;
 import wipb.ee.jspdemo.web.model.User;
 import wipb.ee.jspdemo.web.util.ConnectionFactory;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Stateless
 public class UserDao {
     public void save(User user) {
         final String SQL = "insert into \"USERS\" values (DEFAULT, ?,?,'customer',?,?,?)";

@@ -64,7 +64,8 @@ public class OrdersController extends HttpServlet {
     /*
     private void handleOrdersListNotCancelled(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Orders> orders = dao.findAllNotCancelled();
-        Long customerId = request.costam();
+        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+        Long customerId = myBean.getId();
         orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId);
         request.setAttribute("ordersList", orders);
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);

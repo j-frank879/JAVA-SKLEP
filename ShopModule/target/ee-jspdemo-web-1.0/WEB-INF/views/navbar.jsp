@@ -10,7 +10,6 @@
         <table>
             <tr>
                 <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
-                <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
                 <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
                 <td>  <a href="<c:url value='/login'/>">Login</a></td>
 
@@ -23,7 +22,6 @@
             <tr>
                 <td>  <a href="<c:url value='/product/list'/>">Products</a><br/></td>
                 <td>  <a href="<c:url value='/orders/list'/>">My Orders</a><br/></td>
-                <td>  <a href="<c:url value='/orders/list'/>">Cart</a><br/></td>
                 <td>  <a href="<c:url value='/logout'/>">Logout</a><br/></td>
 
             </tr>
@@ -44,7 +42,6 @@
         <table>
             <tr>
                 <td>  <a href="<c:url value='/product/list'/>">Products</a></td>
-                <td>  <a href="<c:url value='/orders/list'/>">Cart</a></td>
                 <td>  <a href="<c:url value='/registry'/>">Registry</a></td>
                 <td>  <a href="<c:url value='/login'/>">Login</a></td>
 

@@ -1,6 +1,7 @@
 package wipb.ee.jspdemo.web.dao;
 
 
+import jakarta.ejb.Stateless;
 import wipb.ee.jspdemo.web.model.Orders;
 import wipb.ee.jspdemo.web.util.ConnectionFactory;
 import wipb.ee.jspdemo.web.util.DataAccessException;
@@ -12,7 +13,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Stateless
 public class OrdersDao {
     public void save(Orders orders) {
         final String SQL = "insert into \"ORDERS\" values (DEFAULT, ?,?,?,?,?,? )";
