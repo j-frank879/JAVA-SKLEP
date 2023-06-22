@@ -13,6 +13,11 @@
     <title>Orders</title>
 </head>
 <body>
+<c:set var="user" value="${sessionScope.user}"/>
+<c:if test="${user.role=='customer'}">
+    <a href="<c:url value='/orders/add'/>">Make an order</a>
+</c:if>
+
 <table>
     <thead>
     <tr>
@@ -45,7 +50,7 @@
     </c:forEach>
     </tbody>
 </table>
-<a href="<c:url value='/orders/add'/>">Make an order</a>
+
 </body>
 </html>
 </c:set>

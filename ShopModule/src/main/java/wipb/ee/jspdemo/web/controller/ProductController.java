@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class ProductController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(ProductController.class.getName());
-    ProductDao dao = new ProductDao();
+   @EJB private ProductDao dao = new ProductDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -58,13 +58,13 @@ public class ProductController extends HttpServlet {
         }
     }
 
-    void handleProductList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleProductList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Product> products = dao.findAll();
         request.setAttribute("productList", products);
         request.getRequestDispatcher("/WEB-INF/views/product_list.jsp").forward(request, response);
     }
 
-    void handleGetEditGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleGetEditGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
         Product b;
@@ -76,13 +76,13 @@ public class ProductController extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request, response);
     }
 
-    void handleProductAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleProductAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("name","");
         request.setAttribute("price","");
         request.getRequestDispatcher("/WEB-INF/views/product_form.jsp").forward(request,response);
     }
 
-    void handleProductEditPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleProductEditPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
 
@@ -103,7 +103,7 @@ public class ProductController extends HttpServlet {
 
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
-    void handleProductAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleProductAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
 
@@ -123,14 +123,14 @@ public class ProductController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
 
-    void handleProductRemove(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleProductRemove(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
         dao.delete(id);
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
 
-    Product parseProduct(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
+    private Product parseProduct(Map<String,String[]> paramToValue, Map<String,String> fieldToError) {
         String name = paramToValue.get("name")[0];
         String price = paramToValue.get("price")[0];
         BigDecimal bdPrice = null;
@@ -154,7 +154,7 @@ public class ProductController extends HttpServlet {
     }
 
 
-    BigDecimal parsePrice(String s) throws ParseException {
+    private BigDecimal parsePrice(String s) throws ParseException {
         if (s == null || s.trim().isEmpty()) {
             return null;
         }
@@ -164,14 +164,14 @@ public class ProductController extends HttpServlet {
         return ((BigDecimal)format.parse(s)).setScale(2, RoundingMode.FLOOR);
     }
 
-    String formatPrice(BigDecimal price)  {
+    private String formatPrice(BigDecimal price)  {
         if (price == null) return "";
         Locale locale = new Locale("pl", "PL");
         DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         return format.format(price);
     }
 
-    Long parseId(String s) {
+    private Long parseId(String s) {
         if (s == null || !s.startsWith("/"))
             return null;
         return Long.parseLong(s.substring(1));

@@ -1,11 +1,13 @@
 package wipb.ee.jspdemo.web.controller;
 
 
+import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import wipb.ee.jspdemo.web.bean.UserBean;
 import wipb.ee.jspdemo.web.dao.OrdersDao;
 import wipb.ee.jspdemo.web.dao.ProductDao;
 import wipb.ee.jspdemo.web.model.Orders;
@@ -21,12 +23,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "OrdersController", urlPatterns = {"/orders/list", "/orders/cancel/*", "/orders/add", "/orders/pay/*"})
 public class OrdersController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(OrdersController.class.getName());
-    OrdersDao dao = new OrdersDao();
+   @EJB
+   private OrdersDao dao = new OrdersDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -56,9 +60,13 @@ public class OrdersController extends HttpServlet {
         }
     }
 
-    void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Orders> orders = dao.findAll();
+        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+        Long customerId = myBean.getId();
+        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId).collect(Collectors.toList());
         request.setAttribute("ordersList", orders);
+
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     /*
@@ -66,16 +74,16 @@ public class OrdersController extends HttpServlet {
         List<Orders> orders = dao.findAllNotCancelled();
         UserBean myBean = (UserBean) request.getSession().getAttribute("user");
         Long customerId = myBean.getId();
-        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId);
+        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId).collect(Collectors.toList());
         request.setAttribute("ordersList", orders);
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     */
-    void handleOrdersAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleOrdersAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setAttribute("id", "");
         request.getRequestDispatcher("/WEB-INF/views/orders_form.jsp").forward(request, response);
     }
-    void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleOrdersAddPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = null;
 
@@ -94,7 +102,7 @@ public class OrdersController extends HttpServlet {
         dao.save(b);
         response.sendRedirect(request.getContextPath() + "/orders/list");
     }
-    void handleOrdersPayPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    private void handleOrdersPayPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
 
@@ -113,14 +121,14 @@ public class OrdersController extends HttpServlet {
         dao.pay(id);
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
-    void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    private void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
         dao.cancel(id);
         response.sendRedirect(request.getContextPath() + "/orders/list");
     }
 
-    Orders parseOrders(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
+    private Orders parseOrders(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
         String customerId = "1";
         try {
            customerId =  paramToValue.get("customerId")[0];
@@ -154,7 +162,7 @@ public class OrdersController extends HttpServlet {
     }
 
 
-    BigDecimal parsePrice(String s) throws ParseException {
+    private BigDecimal parsePrice(String s) throws ParseException {
         if (s == null || s.trim().isEmpty()) {
             return null;
         }
@@ -163,13 +171,13 @@ public class OrdersController extends HttpServlet {
         format.setParseBigDecimal(true);
         return ((BigDecimal) format.parse(s)).setScale(2, RoundingMode.FLOOR);
     }
-    String formatPrice(BigDecimal price) {
+    private String formatPrice(BigDecimal price) {
         if (price == null) return "";
         Locale locale = new Locale("pl", "PL");
         DecimalFormat format = (DecimalFormat) NumberFormat.getNumberInstance(locale);
         return format.format(price);
     }
-    Long parseId(String s) {
+    private Long parseId(String s) {
         if (s == null || !s.startsWith("/"))
             return null;
         return Long.parseLong(s.substring(1));
