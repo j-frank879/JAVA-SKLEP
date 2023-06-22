@@ -5,11 +5,11 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Registry</title>
+    <title>Register</title>
     <style>.error { color: red; }</style>
 </head>
 <body>
-<h3>Registration</h3>
+<h3>Create new Account</h3>
 <form method="post">
     <table>
         <tr>
@@ -34,7 +34,7 @@
         </tr>
 
     </table>
-    <input type="submit" value="Registry">
+    <input type="submit" value="Register">
 </form>
 </body>
 </html>

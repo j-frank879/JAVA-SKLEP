@@ -1,11 +1,13 @@
 package wipb.ee.jspdemo.web.controller;
 
 
+import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import wipb.ee.jspdemo.web.bean.UserBean;
 import wipb.ee.jspdemo.web.dao.OrdersDao;
 import wipb.ee.jspdemo.web.dao.ProductDao;
 import wipb.ee.jspdemo.web.model.Orders;
@@ -21,12 +23,14 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @WebServlet(name = "OrdersController", urlPatterns = {"/orders/list", "/orders/cancel/*", "/orders/add", "/orders/pay/*"})
 public class OrdersController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(OrdersController.class.getName());
-    private OrdersDao dao = new OrdersDao();
+   @EJB
+   private OrdersDao dao = new OrdersDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -58,7 +62,11 @@ public class OrdersController extends HttpServlet {
 
     private void handleOrdersList(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         List<Orders> orders = dao.findAll();
+        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+        Long customerId = myBean.getId();
+        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId).collect(Collectors.toList());
         request.setAttribute("ordersList", orders);
+
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }
     /*
@@ -66,7 +74,7 @@ public class OrdersController extends HttpServlet {
         List<Orders> orders = dao.findAllNotCancelled();
         UserBean myBean = (UserBean) request.getSession().getAttribute("user");
         Long customerId = myBean.getId();
-        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId);
+        orders = (List<Orders>) orders.stream().filter(a->a.getCustomerId() == customerId).collect(Collectors.toList());
         request.setAttribute("ordersList", orders);
         request.getRequestDispatcher("/WEB-INF/views/orders_list.jsp").forward(request, response);
     }

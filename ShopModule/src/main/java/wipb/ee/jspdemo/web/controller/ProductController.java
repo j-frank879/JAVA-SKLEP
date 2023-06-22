@@ -27,7 +27,7 @@ import java.util.logging.Logger;
 public class ProductController extends HttpServlet {
 
     private final Logger log = Logger.getLogger(ProductController.class.getName());
-    private ProductDao dao = new ProductDao();
+   @EJB private ProductDao dao = new ProductDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();

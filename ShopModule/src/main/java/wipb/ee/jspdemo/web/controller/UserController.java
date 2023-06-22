@@ -1,5 +1,6 @@
 package wipb.ee.jspdemo.web.controller;
 
+import jakarta.ejb.EJB;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -21,7 +22,8 @@ import java.util.logging.Logger;
 @WebServlet(name = "UserController", urlPatterns = {"/registry", "/login", "/logout"})
 public class UserController extends HttpServlet {
     private final Logger log = Logger.getLogger(ProductController.class.getName());
-    private UserDao dao = new UserDao();
+    @EJB
+ private UserDao dao = new UserDao();
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
