@@ -5,13 +5,15 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <title>Registry</title>
+    <title>Register</title>
     <style>.error { color: red; }</style>
 </head>
 <body>
 <h3>Login</h3>
 <form method="post">
-    <table>
+  
+    <p class="error"><%= request.getAttribute("error_message_login")!=null ? request.getAttribute("error_message_login") : ""%></p>
+        <table>
         <tr>
             <td>Login:</td>
             <td><input type="text" name="login"  ></td>

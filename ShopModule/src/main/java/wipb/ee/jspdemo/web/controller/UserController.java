@@ -80,7 +80,7 @@ if(a.isPresent())
     {myBean=new UserBean();
         request.getSession().setAttribute("user",myBean);
     }
-
+    request.setAttribute("error_message_login", "");
     myBean.setId(a.get().getId());
     myBean.setLogin(a.get().getLogin());
     myBean.setRole(a.get().getRole());
@@ -90,7 +90,14 @@ if(a.isPresent())
     response.sendRedirect(request.getContextPath() + "/product/list");
 }
   else
-  {}
+  {
+      request.setAttribute("login", request.getParameter("login"));
+      request.setAttribute("password", request.getParameter("password"));
+      request.setAttribute("error_message_login", "Incorrect login or/and password.");
+
+      request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
+
+  }
 
     }
 
