@@ -4,6 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import wipb.ee.jspdemo.web.bean.UserBean;
 
 import java.math.BigDecimal;
 
@@ -20,6 +21,15 @@ public class User {
     private BigDecimal balance;
 
     public User() {
+    }
+    public User(UserBean u){
+        this.id = u.getId();
+        this.login = u.getLogin();
+        this.password = u.getPassword();
+        this.role = u.getRole();
+        this.name = u.getName();
+        this.email = u.getEmail();
+        this.balance = u.getBalance();
     }
 
     public User(String login, String password, String name, String email) {
