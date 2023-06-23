@@ -1,5 +1,7 @@
 package wipb.ee.jspdemo.web.services;
 
+import com.sun.mail.smtp.SMTPMessage;
+
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -9,24 +11,13 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 
 public class EmailService {
-    private String host = "smtp.ethereal.email";
-    private int port = 587;
-    private String username = "rahsaan97@ethereal.email";
-    private String password = "sUC428Fw2ChRnnzZkE";
+    private final static String host = "smtp.ethereal.email";
+    private final static  int port = 587;
+    private final static String username = "rahsaan97@ethereal.email";
+    private final static String password = "sUC428Fw2ChRnnzZkE";
+    public EmailService(){
 
-    public EmailService(String host, int port, String username, String password) {
-        this.host = host;
-        this.port = port;
-        this.username = username;
-        this.password = password;
     }
-
-    public EmailService(String username, String password){
-        this.username = username;
-        this.password = password;
-    }
-
-    public EmailService(){}
 
     public void sendEmail(String recipient, String subject, String body) throws MessagingException {
         Properties properties = new Properties();
