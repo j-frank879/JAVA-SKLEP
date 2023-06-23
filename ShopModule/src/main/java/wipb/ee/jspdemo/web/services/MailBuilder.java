@@ -1,8 +1,13 @@
 package wipb.ee.jspdemo.web.services;
 
+import wipb.ee.jspdemo.web.bean.UserBean;
+import wipb.ee.jspdemo.web.model.Orders;
+
 import java.util.Date;
+import java.util.Optional;
 
 public class MailBuilder {
+    private String productName;
     private int clientId;
     private int productId;
     private int orderId;
@@ -48,7 +53,7 @@ public class MailBuilder {
     public String buildCancelledOrderBody() {
         String body = "Zamówienie zostało anulowane:\n"
                 + "ID klienta: " + clientId + "\n"
-                + "ID produktu: " + productId + "\n"
+                + "Nazwa produktu: " + productName+ "\n"
                 + "Ilość: " + quantity + "\n"
                 + "Łączna cena: " + totalPrice + "\n";
         return body;
@@ -78,5 +83,13 @@ public class MailBuilder {
                 + "Przewidywany czas dostawy: " + deliveryDate + "\n";
 
         return body;
+    }
+
+    public void parseOrdersRequest(UserBean user, Optional<Orders> order) {
+        clientId= Math.toIntExact(user.getId());
+        productName=order.get().getProductName();
+        quantity=order.get().getProductCount();
+        totalPrice=Double.parseDouble(String.valueOf(order.get().getTotal()));
+        orderId = Math.toIntExact(order.get().getId());
     }
 }

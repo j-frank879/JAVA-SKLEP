@@ -4,7 +4,6 @@ CREATE TABLE IF NOT EXISTS Product
     name varchar(50) NOT NULL,
     price decimal NOT NULL
 );
-
 CREATE TABLE IF NOT EXISTS Orders
 (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
@@ -26,3 +25,7 @@ role varchar(50) NOT NULL,
     email varchar(50),
   balance decimal
 );
+
+/*UPDATE Users
+SET rola = 'worker'
+WHERE login = 'worker';*/

@@ -19,10 +19,10 @@ import wipb.ee.jspdemo.web.dao.UserDao;
 import wipb.ee.jspdemo.web.model.Orders;
 import wipb.ee.jspdemo.web.model.Product;
 import wipb.ee.jspdemo.web.model.User;
-import wipb.ee.jspdemo.web.services.EmailService;
-import wipb.ee.jspdemo.web.services.MailBuilder;
+//import wipb.ee.jspdemo.web.services.EmailService;
+//import wipb.ee.jspdemo.web.services.MailBuilder;
 
-import javax.mail.MessagingException;
+//import javax.mail.MessagingException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -40,7 +40,7 @@ import java.util.stream.Collectors;
         "/orders/listCancelled", "/orders/listPaid", "/orders/listAll", "/orders/list",
         "/orders/cancel/*", "/orders/add", "/orders/pay/*", "/deposit"})
 public class OrdersController extends HttpServlet {
-    private final EmailService emailService = new EmailService();
+//    private final EmailService emailService = new EmailService();
 
     private final Logger log = Logger.getLogger(OrdersController.class.getName());
     @EJB
@@ -82,11 +82,12 @@ public class OrdersController extends HttpServlet {
                 handleOrdersListAll(request, response);
                 break;
             case "/orders/cancel":
-                try {
+               /* try {
                     handleOrdersCancel(request, response);
                 } catch (MessagingException e) {
                     throw new RuntimeException(e);
-                }
+                }*/
+                handleOrdersCancel(request, response);
                 break;
             case "/orders/add":
                 handleOrdersAdd(request, response);
@@ -243,16 +244,16 @@ public class OrdersController extends HttpServlet {
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
 
-    private void handleMailCancelled(HttpServletRequest request, Optional<Orders> order) throws MessagingException {
-        MailBuilder mailBuilder = new MailBuilder();
+    private void handleMailCancelled(HttpServletRequest request, Optional<Orders> order) /*throws MessagingException*/ {
+       // MailBuilder mailBuilder = new MailBuilder();
         UserBean user = (UserBean) request.getSession().getAttribute("user");
-        mailBuilder.parseOrdersRequest(user, order);
+        //mailBuilder.parseOrdersRequest(user, order);
 
-        String body = mailBuilder.buildCancelledOrderBody();
-        emailService.sendEmail(user.getEmail(), "Cancelled order", body);
+        //String body = mailBuilder.buildCancelledOrderBody();
+       // emailService.sendEmail(user.getEmail(), "Cancelled order", body);
     }
 
-    private void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException, MessagingException {
+    private void handleOrdersCancel(HttpServletRequest request, HttpServletResponse response) throws IOException/*, MessagingException */{
         String s = request.getPathInfo();
         Long id = parseId(s);
 

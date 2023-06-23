@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:jsp="http://java.sun.com/jsf/core">
 <head>
-    <title>Moja Strona</title>
+    <title>Sklep JAVA</title>
     <style>
         body {
             display: flex;
@@ -58,7 +58,7 @@
         Sklep </p>
 </header>
 <c:if test="${user!=null}">
-    <c:out value="Currently logged in as: ${sessionScope.user.getName()}"></c:out>
+    <c:out value="Welcome back, ${sessionScope.user.getName()}"></c:out>
 </c:if>
 
 <nav>
