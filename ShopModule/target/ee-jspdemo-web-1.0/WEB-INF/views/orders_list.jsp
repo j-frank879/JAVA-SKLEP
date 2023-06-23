@@ -51,9 +51,6 @@ My current balance: <c:out value="${sessionScope.user.balance}"></c:out>
     </c:forEach>
     </tbody>
 </table>
-<table>
-
-</table>
 
 </br><a href="<c:url value='/orders/list'/>">Show only unpaid/not cancelled</a>
 </br><a href="<c:url value='/orders/listAll'/>">Show all</a>
