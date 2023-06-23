@@ -17,6 +17,7 @@
 <c:if test="${user.role=='customer'}">
     <a href="<c:url value='/orders/add'/>">Make an order</a>
 </c:if>
+My current balance: <c:out value="${sessionScope.user.balance}"></c:out>
 
 <table>
     <thead>
@@ -50,7 +51,14 @@
     </c:forEach>
     </tbody>
 </table>
+<table>
 
+</table>
+
+</br><a href="<c:url value='/orders/list'/>">Show only unpaid/not cancelled</a>
+</br><a href="<c:url value='/orders/listAll'/>">Show all</a>
+</br><a href="<c:url value='/orders/listCancelled'/>">Show cancelled only</a>
+</br><a href="<c:url value='/orders/listPaid'/>">Show paid only</a>
 </body>
 </html>
 </c:set>
