@@ -16,14 +16,28 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.logging.FileHandler;
 import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 //MyBean myBean = (MyBean) request.getSession().getAttribute("myBean");
 @WebServlet(name = "UserController", urlPatterns = {"/registry", "/login", "/logout"})
 public class UserController extends HttpServlet {
     private final Logger log = Logger.getLogger(ProductController.class.getName());
     @EJB
- private UserDao dao = new UserDao();
+    private UserDao dao = new UserDao();
+    @Override
+    public void init() throws ServletException {
+        super.init();
+        FileHandler fh;
+        try {
+            fh = new FileHandler("./userController.txt");
+            log.addHandler(fh);
+            SimpleFormatter formatter = new SimpleFormatter();
+            fh.setFormatter(formatter);
+        } catch (Exception __) {}
+    }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -40,8 +54,6 @@ public class UserController extends HttpServlet {
         }
     }
 
-
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String path = request.getServletPath();
@@ -53,71 +65,69 @@ public class UserController extends HttpServlet {
         }
 
     }
-    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("login","");
-        request.setAttribute("password","");
-        request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
-    }
-    void handleLoginPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
+    private void handleLogin(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        request.setAttribute("login", "");
+        request.setAttribute("password", "");
+        request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request, response);
+    }
+
+    void handleLoginPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         String s = request.getPathInfo();
         Long id = parseId(s);
-        String role="customer";
-        Map<String,String> fieldToError = new HashMap<>();
+        String role = "customer";
+        Map<String, String> fieldToError = new HashMap<>();
         User b = parseLoginPassword(request.getParameterMap(), fieldToError);
 
-        if(!fieldToError.isEmpty()){
+        if (!fieldToError.isEmpty()) {
             request.setAttribute("errors", fieldToError);
             request.setAttribute("login", request.getParameter("login"));
             request.setAttribute("password", request.getParameter("password"));
 
-
-            request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request, response);
             return;
         }
-        Optional<User> a=dao.findByLoginPassword(b.getLogin(),b.getPassword());
-if(a.isPresent())
-{UserBean myBean = (UserBean) request.getSession().getAttribute("user");
-    if(myBean==null)
-    {myBean=new UserBean();
-        request.getSession().setAttribute("user",myBean);
-    }
-    request.setAttribute("error_message_login", "");
-    myBean.setId(a.get().getId());
-    myBean.setLogin(a.get().getLogin());
-    myBean.setRole(a.get().getRole());
-    myBean.setName(a.get().getName());
-    myBean.setEmail(a.get().getEmail());
-    myBean.setBalance(a.get().getBalance());
-    response.sendRedirect(request.getContextPath() + "/product/list");
-}
-  else
-  {
-      request.setAttribute("login", request.getParameter("login"));
-      request.setAttribute("password", request.getParameter("password"));
-      request.setAttribute("error_message_login", "Incorrect login or/and password.");
+        Optional<User> a = dao.findByLoginPassword(b.getLogin(), b.getPassword());
+        if (a.isPresent()) {
+            UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+            if (myBean == null) {
+                myBean = new UserBean();
+                request.getSession().setAttribute("user", myBean);
+            }
+            request.setAttribute("error_message_login", "");
+            myBean.setId(a.get().getId());
+            myBean.setLogin(a.get().getLogin());
+            myBean.setRole(a.get().getRole());
+            myBean.setName(a.get().getName());
+            myBean.setEmail(a.get().getEmail());
+            myBean.setBalance(a.get().getBalance());
+            log.info("User id: " + myBean.getId() + " successfully logged in.");
+            response.sendRedirect(request.getContextPath() + "/product/list");
+        } else {
+            request.setAttribute("login", request.getParameter("login"));
+            request.setAttribute("password", request.getParameter("password"));
+            request.setAttribute("error_message_login", "Incorrect login or/and password.");
+            log.warning("There was a failed attempt to login with the following credentials. Login:" + request.getParameter("login"));
 
-      request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request,response);
-
-  }
-
+            request.getRequestDispatcher("/WEB-INF/views/login_form.jsp").forward(request, response);
+        }
     }
 
     private void handleRegistryPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
         String s = request.getPathInfo();
         Long id = parseId(s);
-        String role="customer";
-        Map<String,String> fieldToError = new HashMap<>();
+        String role = "customer";
+        Map<String, String> fieldToError = new HashMap<>();
         User b = parseUser(request.getParameterMap(), fieldToError);
 
-        if(!fieldToError.isEmpty()){
+        if (!fieldToError.isEmpty()) {
             request.setAttribute("errors", fieldToError);
             request.setAttribute("name", request.getParameter("name"));
             request.setAttribute("email", request.getParameter("email"));
             request.setAttribute("login", request.getParameter("login"));
             request.setAttribute("password", request.getParameter("password"));
 
-            request.getRequestDispatcher("/WEB-INF/views/registry_form.jsp").forward(request,response);
+            request.getRequestDispatcher("/WEB-INF/views/registry_form.jsp").forward(request, response);
             return;
         }
         b.setId(id);
@@ -128,56 +138,57 @@ if(a.isPresent())
     }
 
     void handleLogout(HttpServletRequest request, HttpServletResponse response) throws IOException {
-       UserBean myBean = (UserBean) request.getSession().getAttribute("user");
-       myBean.clear();
-       //request.getSession().invalidate();
+        UserBean myBean = (UserBean) request.getSession().getAttribute("user");
+        myBean.clear();
+        //request.getSession().invalidate();
         response.sendRedirect(request.getContextPath() + "/product/list");
     }
 
     private void handleRegistry(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setAttribute("login","");
-        request.setAttribute("password","");
-        request.setAttribute("name","");
-        request.setAttribute("email","");
-        request.getRequestDispatcher("/WEB-INF/views/registry_form.jsp").forward(request,response);
+        request.setAttribute("login", "");
+        request.setAttribute("password", "");
+        request.setAttribute("name", "");
+        request.setAttribute("email", "");
+        request.getRequestDispatcher("/WEB-INF/views/registry_form.jsp").forward(request, response);
     }
 
 
-    private User parseUser(Map<String,String[]> paramToValue, Map<String,String> fieldToError) {
+    private User parseUser(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
         String name = paramToValue.get("name")[0];
         String login = paramToValue.get("login")[0];
         String password = paramToValue.get("password")[0];
         String email = paramToValue.get("email")[0];
 
         if (name == null || name.trim().isEmpty()) {
-            fieldToError.put("name","Pole name nie może być puste");
+            fieldToError.put("name", "Pole name nie może być puste");
         }
         if (email == null || email.trim().isEmpty()) {
-            fieldToError.put("email","Pole email nie może być puste");
+            fieldToError.put("email", "Pole email nie może być puste");
         }
         if (login == null || login.trim().isEmpty()) {
-            fieldToError.put("name","Pole login nie może być puste");
+            fieldToError.put("name", "Pole login nie może być puste");
         }
         if (password == null || password.trim().isEmpty()) {
-            fieldToError.put("name","Pole password nie może być puste");
+            fieldToError.put("name", "Pole password nie może być puste");
         }
 
-        return fieldToError.isEmpty() ?  new User(login,password,name,email) : null;
+        return fieldToError.isEmpty() ? new User(login, password, name, email) : null;
     }
-    private User parseLoginPassword(Map<String,String[]> paramToValue, Map<String,String> fieldToError)
-    {String login = paramToValue.get("login")[0];
+
+    private User parseLoginPassword(Map<String, String[]> paramToValue, Map<String, String> fieldToError) {
+        String login = paramToValue.get("login")[0];
         String password = paramToValue.get("password")[0];
         if (login == null || login.trim().isEmpty()) {
-            fieldToError.put("name","Pole login nie może być puste");
+            fieldToError.put("name", "Pole login nie może być puste");
         }
         if (password == null || password.trim().isEmpty()) {
-            fieldToError.put("name","Pole password nie może być puste");
+            fieldToError.put("name", "Pole password nie może być puste");
         }
-        return fieldToError.isEmpty() ?  new User(login,password) : null;
+        return fieldToError.isEmpty() ? new User(login, password) : null;
     }
+
     private Long parseId(String s) {
-        if (s == null || !s.startsWith("/"))
-            return null;
+        if (s == null || !s.startsWith("/")) return null;
         return Long.parseLong(s.substring(1));
     }
 

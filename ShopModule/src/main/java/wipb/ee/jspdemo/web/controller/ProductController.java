@@ -36,7 +36,7 @@ public class ProductController extends HttpServlet {
         super.init();
         FileHandler fh;
         try {
-            fh = new FileHandler("./" + this.getClass().getName() + ".txt");
+            fh = new FileHandler("./productController.txt");
             log.addHandler(fh);
             SimpleFormatter formatter = new SimpleFormatter();
             fh.setFormatter(formatter);
