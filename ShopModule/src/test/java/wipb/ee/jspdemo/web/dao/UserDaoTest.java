@@ -125,9 +125,10 @@ public class UserDaoTest {
 
         List<User> users = userDao.findAll();
         assertEquals(2, users.size());
-        assertEquals(users.get(0).getId(),user1.getId());
-        assertEquals(users.get(1).getId(),user2.getId());
+        assertEquals(users.get(0).getId(), user1.getId());
+        assertEquals(users.get(1).getId(), user2.getId());
     }
+
     @Test
     public void testTruncate() {
         User user1 = new User();
@@ -147,10 +148,9 @@ public class UserDaoTest {
         userDao.save(user2);
 
 
-        // Wywołaj metodę truncate()
         userDao.truncate();
-
-        // Sprawdź, czy baza danych jest pusta po wywołaniu truncate()
+        assertEquals(0, userDao.findAll().size());
+        userDao.truncate();
         assertEquals(0, userDao.findAll().size());
     }
 }

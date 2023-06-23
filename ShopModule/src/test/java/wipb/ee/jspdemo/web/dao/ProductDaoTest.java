@@ -16,15 +16,12 @@ public class ProductDaoTest {
 
     @BeforeEach
     public void setUp() {
-        // Inicjalizacja przed każdym testem
         productDao = new ProductDao();
-        // Tutaj możesz ewentualnie zainicjalizować bazę danych testową
     }
 
     @AfterEach
     public void tearDown() {
-        // Sprzątanie po każdym teście
-        productDao.truncate(); // Usuwa wszystkie produkty z bazy danych
+        productDao.truncate(); 
     }
 
     @Test
@@ -35,11 +32,11 @@ public class ProductDaoTest {
 
         productDao.save(product);
 
-        assertNotNull(product.getId()); // Upewniamy się, że produkt otrzymał przypisane ID
+        assertNotNull(product.getId()); 
         Optional<Product> savedProduct = productDao.find(product.getId());
-        assertTrue(savedProduct.isPresent()); // Produkt powinien być zapisany w bazie danych
-        assertEquals(product.getName(), savedProduct.get().getName()); // Sprawdzamy zgodność nazwy
-        assertEquals(product.getPrice(), savedProduct.get().getPrice()); // Sprawdzamy zgodność ceny
+        assertTrue(savedProduct.isPresent()); 
+        assertEquals(product.getName(), savedProduct.get().getName()); 
+        assertEquals(product.getPrice(), savedProduct.get().getPrice()); 
     }
 
     @Test
@@ -55,8 +52,8 @@ public class ProductDaoTest {
 
         Optional<Product> updatedProduct = productDao.find(product.getId());
         assertTrue(updatedProduct.isPresent());
-        assertEquals(product.getName(), updatedProduct.get().getName()); // Sprawdzamy, czy nazwa została zaktualizowana
-        assertEquals(product.getPrice(), updatedProduct.get().getPrice()); // Sprawdzamy, czy cena została zaktualizowana
+        assertEquals(product.getName(), updatedProduct.get().getName()); 
+        assertEquals(product.getPrice(), updatedProduct.get().getPrice()); 
     }
 
     @Test
@@ -69,7 +66,7 @@ public class ProductDaoTest {
         productDao.delete(product);
 
         Optional<Product> deletedProduct = productDao.find(product.getId());
-        assertFalse(deletedProduct.isPresent()); // Produkt powinien zostać usunięty z bazy danych
+        assertFalse(deletedProduct.isPresent()); 
     }
 
     @Test
@@ -80,9 +77,9 @@ public class ProductDaoTest {
         productDao.save(product);
 
         Optional<Product> foundProduct = productDao.find(product.getId());
-        assertTrue(foundProduct.isPresent()); // Produkt powinien zostać znaleziony w bazie danych
-        assertEquals(product.getName(), foundProduct.get().getName()); // Sprawdzamy zgodność nazwy
-        assertEquals(product.getPrice(), foundProduct.get().getPrice()); // Sprawdzamy zgodność ceny
+        assertTrue(foundProduct.isPresent()); 
+        assertEquals(product.getName(), foundProduct.get().getName()); 
+        assertEquals(product.getPrice(), foundProduct.get().getPrice()); 
     }
 
     @Test
@@ -93,9 +90,9 @@ public class ProductDaoTest {
         productDao.save(product);
 
         Optional<Product> foundProduct = productDao.find(product.getName());
-        assertTrue(foundProduct.isPresent()); // Produkt powinien zostać znaleziony w bazie danych
-        assertEquals(product.getName(), foundProduct.get().getName()); // Sprawdzamy zgodność nazwy
-        assertEquals(product.getPrice(), foundProduct.get().getPrice()); // Sprawdzamy zgodność ceny
+        assertTrue(foundProduct.isPresent()); 
+        assertEquals(product.getName(), foundProduct.get().getName()); 
+        assertEquals(product.getPrice(), foundProduct.get().getPrice()); 
     }
 
     @Test
@@ -111,9 +108,9 @@ public class ProductDaoTest {
         productDao.save(product2);
 
         List<Product> products = productDao.findAll();
-        assertEquals(2, products.size()); // Sprawdzamy, czy znaleziono 2 produkty
-        assertEquals(product1.getName(), products.get(0).getName()); // Sprawdzamy zgodność nazwy pierwszego produktu
-        assertEquals(product2.getName(), products.get(1).getName()); // Sprawdzamy zgodność nazwy drugiego produktu
+        assertEquals(2, products.size()); 
+        assertEquals(product1.getName(), products.get(0).getName()); 
+        assertEquals(product2.getName(), products.get(1).getName()); 
     }
     @Test
     public void testTruncate() {
@@ -127,10 +124,10 @@ public class ProductDaoTest {
         product2.setPrice(BigDecimal.valueOf(19.99));
         productDao.save(product2);
 
-        // Wywołaj metodę truncate()
+        
         productDao.truncate();
 
-        // Sprawdź, czy baza danych jest pusta po wywołaniu truncate()
+        
         assertEquals(0, productDao.findAll().size());
     }
 }
