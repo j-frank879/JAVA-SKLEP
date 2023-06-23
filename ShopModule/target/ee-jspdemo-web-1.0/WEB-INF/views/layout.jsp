@@ -58,7 +58,7 @@
         Sklep </p>
 </header>
 <c:if test="${user!=null}">
-    <c:out value="Welcome back, ${sessionScope.user.getName()}"></c:out>
+    <c:out value="Currently logged in as: ${sessionScope.user.getName()}"></c:out>
 </c:if>
 
 <nav>
