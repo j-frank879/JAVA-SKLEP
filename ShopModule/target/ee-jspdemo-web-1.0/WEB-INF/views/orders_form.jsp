@@ -27,7 +27,7 @@
                 <td><span class="error">${errors.price}</span></td>
             </tr>
         </table>
-        <input type="submit" value="Save">
+        <input type="submit" value="add">
     </form>
     List of our Products:
     <table>
